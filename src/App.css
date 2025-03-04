@@ -20,7 +20,14 @@
   display: flex;
 }
 
-.row>div {
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.cell {
+  user-select: none;
+  cursor: pointer;
   background-color: aliceblue;
   border: 1px solid black;
   width: 64px;

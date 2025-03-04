@@ -2,11 +2,15 @@ import React from "react";
 
 type Props = {
   value?: string;
-  cellId: number;
+  onClick?: () => void;
 };
 
-function Cell({ cellId }: Props) {
-  return <div className="cell">{cellId}</div>;
+function Cell({ value, onClick }: Props) {
+  return (
+    <div className="cell" onClick={onClick}>
+      {value}
+    </div>
+  );
 }
 
 export default Cell;
