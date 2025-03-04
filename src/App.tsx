@@ -1,30 +1,35 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Cell from "./Cell";
 
 function App() {
-  const [player, setPlayer] = useState("X");
-  const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
+  const [board, setBoard] = useState<string[]>(Array(9).fill(""));
+  const [player, setPlayer] = useState<"X" | "O">("X");
 
-  function handleClick(cellId: number) {
-    if (board[cellId] !== "") {
-      return;
-    }
-    setBoard((prevBoard) => {
-      const newBoard = [...prevBoard];
-      newBoard[cellId] = player;
-      return newBoard;
-    });
+  useEffect(() => {
     const winner = checkWinner();
     if (winner) {
       alert(`Player ${winner} wins!`);
-      setBoard(["", "", "", "", "", "", "", "", ""]);
+      setBoard(Array(9).fill(""));
+      setPlayer("X");
+    }
+  }, [board]);
+
+  function handleClick(index: number) {
+    if (board[index] !== "") {
+      alert("Invalid move");
       return;
     }
+    setBoard((prevBoard) => [
+      ...prevBoard.slice(0, index),
+      player,
+      ...prevBoard.slice(index + 1),
+    ]);
+
     setPlayer((prevPlayer) => (prevPlayer === "X" ? "O" : "X"));
   }
 
-  function checkWinner(): string {
+  function checkWinner() {
     const winningCombos = [
       [0, 1, 2],
       [3, 4, 5],
@@ -41,15 +46,15 @@ function App() {
         return board[a];
       }
     }
-    return "";
+    return null;
   }
 
   return (
     <div className="App">
       <h1 className="title">TicTacToe</h1>
       <div className="container">
-        {board.map((cell, index) => (
-          <Cell key={index} value={cell} onClick={() => handleClick(index)} />
+        {board.map((value, index) => (
+          <Cell key={index} value={value} onClick={() => handleClick(index)} />
         ))}
       </div>
     </div>
