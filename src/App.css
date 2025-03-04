@@ -10,17 +10,15 @@
   text-align: center;
 }
 
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .cell {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.row {
-  display: flex;
-}
-
-.row>div {
   background-color: aliceblue;
   border: 1px solid black;
   width: 64px;
